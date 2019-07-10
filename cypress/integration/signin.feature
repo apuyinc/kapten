@@ -2,24 +2,22 @@ Feature: Sign in
 
   User sign in process
 
-
-  Scenario:
+  Scenario: User is able to sign in with correct username and correct password
     Given user navigates to sign in page
-    When user sign in with username 'google@assistance.google' and password 'GoogleAssistance1'
-    Then user is in 'commander' screen
+    When user sign in with registered email and correct password
+    Then user is in 'commander' page
 
-  Scenario:
+  Scenario: user is not able to enter again the application once signed out
     Given user navigates to sign in page
-    And user sign in with username 'google@assistance.google' and password 'GoogleAssistance1'
+    And user sign in with registered email and correct password
     When user sign out
     Then user is in 'signin' page
     And user cannot go back to 'commander' screen
 
-
-  Scenario:
+  Scenario: user is not able to sign in with correct username but wrong password
     Given user navigates to sign in page
     When user sign in with username 'google@assistance.google' and password 'NotCorrectPassword1'
     Then user is in 'signin' page
-    And "Incorrect credentials" message is shown
+    And 'Incorrect credentials. Please check and try again.' message is shown
     And email field contains 'google@assistance.google'
-    And password field is empty
+    And password field contains ''
